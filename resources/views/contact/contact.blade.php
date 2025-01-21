@@ -5,11 +5,11 @@
     <div class="contact-info">
       <div class="contact-item">
         <i class="bi bi-geo-alt"></i>
-        <span>2248 US-9, Howell Township, NJ 07731, United States</span>
+        <span>Green Valey Street No.90A, Forest District</span>
       </div>
       <div class="contact-item">
         <i class="bi bi-telephone"></i>
-        <span>0968737293</span>
+        <span>082190909090</span>
       </div>
       <div class="contact-item">
         <i class="bi bi-envelope"></i>
@@ -17,7 +17,7 @@
       </div>
       <div class="contact-item">
         <i class="bi bi-whatsapp"></i>
-        <span>+628112045777</span>
+        <span>+6282190909090</span>
       </div>
     </div>
   </div>

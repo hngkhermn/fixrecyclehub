@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-4 footer-section">
         <h3>Contact Information</h3>
-        <p>Address: 2248 US-9, Howell Township, NJ 07731, United States</p>
-        <p>Phone: 0968737293</p>
+        <p>Address: Green Valey Street No.90A, Forest District</p>
+        <p>Phone: 082190909090</p>
       </div>
       <div class="col-md-4 footer-section">
         <h3>About Us</h3>
@@ -16,10 +16,9 @@
         </ul>
       </div>
       <div class="col-md-4 footer-section">
-        <h3>Products and Services</h3>
+        <h3>Products</h3>
         <ul>
-          <li><a href="#">Waste treatment machines</a></li>
-          <li><a href="#">Coconut charcoal</a></li>
+          <li><a href="/product">All products have been through a recycling process</a></li>
         </ul>
       </div>
     </div>
