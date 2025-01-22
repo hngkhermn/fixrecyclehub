@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout><
   <div class="filter-header d-flex justify-content-between align-items-center mb-4">
     <!-- Filter Kategori dan Pengaturan Tampilan -->
     <div class="view-options d-flex align-items-center">
@@ -40,7 +40,7 @@
           <div class="col-md-4 product-card" data-category="{{ $product->categories }}">
             <a href="{{ route('product.detail', $product->id_products) }}" class="text-decoration-none">
               <div class="card">
-                <img src="{{ asset('storage/' . $product->images) }}" class="card-img-top" alt="{{ $product->categories }}">
+                <img src="/storage/images/{{$product->images}}" class="card-img-top" alt="{{ $product->categories }}">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{ $product->name }}</h5>
                   <p class="card-text">Rp {{ number_format($product->price, 0, ',', '.') }}</p>

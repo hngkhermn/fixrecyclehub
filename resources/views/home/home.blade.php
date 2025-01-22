@@ -4,21 +4,22 @@
     <div class="hero-overlay">
       <div class="container text-center text-white">
         <h1>RECYCLE HUB WHERE WASTE TRANSFORMS INTO VALUE</h1>
-        <p>RecycleHub adalah marketplace yang mengubah limbah menjadi barang berguna seperti hiasan, alat rumah tangga, dan dekorasi unik. Kami mendukung daur ulang untuk masa depan yang lebih berkelanjutan.</p>
+        <p>RecycleHub adalah marketplace yang mengubah limbah menjadi barang berguna seperti hiasan, alat rumah tangga,
+          dan dekorasi unik. Kami mendukung daur ulang untuk masa depan yang lebih berkelanjutan.</p>
       </div>
     </div>
   </section>
 
   <section class="product-section">
-  <h2 class="section-title">PRODUCTS</h2>
-  <div class="product-container">
-    @foreach($products as $product)
+    <h2 class="section-title">PRODUCTS</h2>
+    <div class="product-container">
+      @foreach($products as $product)
       <div class="product-card">
-        <!-- <a href="{{ route('product.detail', $product->id_products) }}"> -->
-        <a href="{{ route('product') }}">
-          <img src="{{ asset('storage/' . $product->images) }}" alt="{{ $product->name }}">
-          <div class="product-name">{{ $product->name }}</div>
-        </a>
+      <!-- <a href="{{ route('product.detail', $product->id_products) }}"> -->
+      <a href="{{ route('product') }}">
+        <img src="/storage/images/{{$product->images}}" alt="{{ $product->name }}">
+        <div class="product-name">{{ $product->name }}</div>
+      </a>
       </div>
     @endforeach
     </div>

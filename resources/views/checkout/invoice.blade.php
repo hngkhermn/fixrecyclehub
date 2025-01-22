@@ -35,14 +35,14 @@
     <div class="invoice">
         <div class="invoice-header">
             <h1>Invoice</h1>
-            <p>Order #{{ $orderId }}</p>
+            <p>Order #{{ $order->order_id }}</p>
         </div>
 
         <div class="invoice-details">
-            <p><strong>Nama:</strong> {{ $order['customer_name'] }}</p>
-            <p><strong>Email:</strong> {{ $order['customer_email'] }}</p>
-            <p><strong>Phone:</strong> {{ $order['customer_phone'] }}</p>
-            <p><strong>Alamat:</strong> {{ $order['shipping_address'] }}, {{ $order['shipping_city'] }}, {{ $order['shipping_postal'] }}</p>
+            <p><strong>Nama:</strong> {{ $order->customer_name }}</p>
+            <p><strong>Email:</strong> {{ $order->customer_email }}</p>
+            <p><strong>Phone:</strong> {{ $order->customer_phone }}</p>
+            <p><strong>Alamat:</strong> {{ $order->shipping_address }}, {{ $order->shipping_city }}, {{ $order->shipping_postal }}</p>
             <p><strong>Total:</strong> Rp {{ number_format($total, 0, ',', '.') }}</p>
         </div>
 
@@ -57,12 +57,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($cart as $id => $details)
+                @foreach($cartItems as $item)
                     <tr>
-                        <td>{{ $details['name'] }}</td>
-                        <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
-                        <td>{{ $details['quantity'] }}</td>
-                        <td>Rp {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</td>
+                        <td>{{ $item->product->name }}</td>
+                        <td>Rp {{ number_format($item->product->price, 0, ',', '.') }}</td>
+                        <td>{{ $item->quantity }}</td>
+                        <td>Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</td>
                     </tr>
                 @endforeach
                 <tr class="total-row">

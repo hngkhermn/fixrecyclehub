@@ -11,15 +11,4 @@ class Product extends Model
 
     protected $guarded = ['id_products'];
     protected $primaryKey = 'id_products';
-    public $incrementing = true;
-    protected $keyType = 'int';
-
-    protected $fillable = [
-        'name',
-        'images',
-        'description',
-        'price',
-        'stock',
-        'categories',
-    ];
 }

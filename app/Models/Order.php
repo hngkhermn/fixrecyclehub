@@ -9,5 +9,20 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id_order'];
+    protected $fillable = [
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'shipping_address',
+        'shipping_city',
+        'shipping_postal',
+        'total',
+        'order_id',
+    ];
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
 }

@@ -20,7 +20,7 @@ class AuthManualController extends Controller
 
         if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
             if (Auth::user()->role == 'admin') {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard.index');
             } else {
                 return redirect()->route('home');
             }

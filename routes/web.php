@@ -27,22 +27,10 @@ Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('car
 
 Route::get('/contact', [ContactController::class, "index"])->name("contact");
 
-// Route::get('/checkout', function () {
-//     $cart = session()->get('cart');
-//     if (empty($cart)) {
-//         return redirect()->route('product')->with('error', 'Keranjang kosong!');
-//     }
-//     return view('checkout.index', compact('cart'));
-// })->name('checkout');
-
-Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout'); // Checkout page
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout'); // Checkout page
 Route::post('/checkout/confirm', [CheckoutController::class, 'confirmOrder'])->name('order.confirm'); // Confirm order page
 
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Route::get('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
-    // Route::get('/dashboard/{dashboard}', [DashboardController::class, 'show'])->name('dashboard.show');
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('dashboard', DashboardController::class);
 });
 

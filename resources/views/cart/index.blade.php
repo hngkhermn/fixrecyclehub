@@ -4,7 +4,7 @@
     <div class="container">
       <h1 class="text-center mb-4">Keranjang Belanja</h1>
 
-      @if(session('cart') && count(session('cart')) > 0)
+      @if($cartItems->isNotEmpty())
       <div class="row">
         <div class="col-md-8">
           <!-- Daftar Produk di Keranjang -->
@@ -21,22 +21,21 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach(session('cart') as $id => $details)
+                @foreach($cartItems as $item)
                 <tr>
-                  <td>{{ $details['name'] }}</td>
-                  <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
+                  <td>{{ $item->product->name }}</td>
+                  <td>Rp {{ number_format($item->product->price, 0, ',', '.') }}</td>
                   <td>
                     <!-- Input untuk Mengubah Kuantitas -->
-                    <input type="number" name="quantities[{{ $id }}]" value="{{ $details['quantity'] }}" min="0" style="width: 50px;" >
+                    <input type="number" name="quantities[{{ $item->id }}]" value="{{ $item->quantity }}" min="0" style="width: 50px;">
                   </td>
-                  <td>Rp {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</td>
+                  <td>Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
             <button type="submit" class="btn btn-warning btn-sm">Perbarui Keranjang</button>
           </form>
-
 
           <div class="text-center mt-4">
             <a href="{{ route('product') }}" class="btn btn-outline-secondary">Lanjutkan Belanja</a>
@@ -50,9 +49,7 @@
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Subtotal
-                <span>Rp {{ number_format($cartTotal = array_sum(array_map(function ($item) {
-                  return $item['price'] * $item['quantity'];
-                }, session('cart'))), 0, ',', '.') }}</span>
+                <span>Rp {{ number_format($cartItems->sum(fn($item) => $item->product->price * $item->quantity), 0, ',', '.') }}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Biaya Pengiriman
@@ -60,7 +57,7 @@
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Total</strong>
-                <strong>Rp {{ number_format($cartTotal + 10000, 0, ',', '.') }}</strong>
+                <strong>Rp {{ number_format($cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10000, 0, ',', '.') }}</strong>
               </li>
             </ul>
 

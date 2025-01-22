@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="product-image">
-            <img src="{{ asset('storage/' . $product->images) }}" class="img-fluid" alt="{{ $product->name }}">
+            <img src="/storage/images/{{$product->images}}" class="img-fluid" alt="{{ $product->name }}">
           </div>
         </div>
         <div class="col-md-6">

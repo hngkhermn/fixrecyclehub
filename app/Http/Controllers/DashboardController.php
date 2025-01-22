@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -23,82 +22,86 @@ class DashboardController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
-            'images' => 'nullable|image|mimes:jpeg,jpg,png|max:5120',
+            'images' => 'required|image|mimes:jpeg,jpg,png|max:5120',
             'description' => 'required',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categories' => 'required|string'
+            'categories' => 'required'
         ]);
 
+        // if ($request->hasFile('images')){
+        //     $validateData['images'] = $request->file('images')->store('images', 'public');
+        // }
+
+        $data = $request->all();
+
         if ($request->hasFile('images')) {
-            $validateData['images'] = $request->file('images')->store('images', 'public');
+            $file = $request->file('images');
+            $destinationPath = storage_path('app/public/images');
+            $filename = md5($file->getClientOriginalName() . time()) . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+
+            $data['images'] = $filename;
         }
 
-        Product::create($validateData);
-
+        Product::create($data);
         return redirect()->route('dashboard.index')->with('success', 'Product created successfully.');
     }
 
-    public function show($id)
+    public function show(Product $dashboard)
     {
-        $product = Product::findOrFail($id);
-        return view('dashboard.show', compact('product'));
+        // $single_product = Product::where('id', $product)->first();
+        return view('dashboard.show', compact('dashboard'));
     }
 
-    public function edit($id)
+    public function edit(Product $dashboard)
     {
-        $product = Product::findOrFail($id);
-        return view('dashboard.edit', compact('product'));
+        return view('dashboard.edit', compact('dashboard'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $dashboard)
     {
-        // Validasi data
-        $validateData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
+            'images' => 'nullable|image|mimes:jpeg,jpg,png|max:5120',
             'description' => 'required',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categories' => 'required|string',
-            'images' => 'nullable|image|mimes:jpeg,jpg,png|max:5120',
+            'categories' => 'required'
         ]);
 
-        // Temukan produk berdasarkan id_products
-        $product = Product::findOrFail($id);
+        $data = $request->except('images');
 
-        // Cek apakah ada gambar baru diupload
         if ($request->hasFile('images')) {
-            // Hapus gambar lama jika ada
-            if ($product->images) {
-                Storage::disk('public')->delete($product->images);
-            }
+            $file = $request->file('images');
+            $destinationPath = storage_path('app/public/images');
+            $filename = md5($file->getClientOriginalName() . time()) . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
 
-            // Simpan gambar baru
-            $validateData['images'] = $request->file('images')->store('images', 'public');
+            $data['images'] = $filename;
         }
 
-        // Perbarui data produk
-        $product->update($validateData);
 
-        // Redirect ke halaman index dengan pesan sukses
+        $dashboard->update($data);
+
         return redirect()->route('dashboard.index')->with('success', 'Product updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Product $dashboard)
     {
-        // Temukan produk berdasarkan id_products
-        $product = Product::findOrFail($id);
+        // Cek apakah produk memiliki gambar
+        if ($dashboard->images) {
+            $imagePath = storage_path('app/public/images/' . $dashboard->images);
 
-        // Hapus gambar dari storage jika ada
-        if ($product->images) {
-            Storage::disk('public')->delete($product->images);
+            // Hapus file gambar jika ada
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
         }
 
         // Hapus produk dari database
-        $product->delete();
+        $dashboard->delete();
 
-        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('dashboard.index')->with('success', 'Product deleted successfully.');
     }
-
 }
